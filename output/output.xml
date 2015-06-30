@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20150630 17:47:27.851" generator="Robot 2.8.7 (Python 2.7.10 on linux2)">
+<suite source="/home/denis/workspace/buildroot_test/images_from_vicx-dell/deb/tests/package/python_test.robot" id="s1" name="Python Test">
+<kw type="setup" name="buildroot.Boot And Connect">
+<doc>Boots, connects and login to qemu. Should also build</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="buildroot.Boot">
+<doc>boots qemu using variables defined in the test file</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="@{image_option} = Create Image Option">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="${image_path} = OperatingSystem.Join Path">
+<doc>Joins the given path part(s) to the given base path.</doc>
+<arguments>
+<arg>/home/denis/workspace/buildroot_test/images_from_vicx-dell/deb</arg>
+<arg>${image}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:27.946" level="INFO">${image_path} = /home/denis/workspace/buildroot_test/images_from_vicx-dell/deb/rootfs.ext2</msg>
+<status status="PASS" endtime="20150630 17:47:27.946" starttime="20150630 17:47:27.946"></status>
+</kw>
+<kw type="kw" name="@{image_option} = BuiltIn.Create List">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+<arg>-hda</arg>
+<arg>${image_path}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:27.947" level="INFO">@{image_option} = [ -hda | /home/denis/workspace/buildroot_test/images_from_vicx-dell/deb/rootfs.ext2 ]</msg>
+<status status="PASS" endtime="20150630 17:47:27.947" starttime="20150630 17:47:27.946"></status>
+</kw>
+<msg timestamp="20150630 17:47:27.948" level="INFO">@{image_option} = [ -hda | /home/denis/workspace/buildroot_test/images_from_vicx-dell/deb/rootfs.ext2 ]</msg>
+<status status="PASS" endtime="20150630 17:47:27.947" starttime="20150630 17:47:27.945"></status>
+</kw>
+<kw type="kw" name="@{options} = BuiltIn.Create List">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+<arg>@{options}</arg>
+<arg>@{image_option}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:27.948" level="INFO">@{options} = [ -enable-kvm | -kernel | bzImage | -hda | /home/denis/workspace/buildroot_test/images_from_vicx-dell/deb/rootfs.ext2 ]</msg>
+<status status="PASS" endtime="20150630 17:47:27.948" starttime="20150630 17:47:27.948"></status>
+</kw>
+<kw type="kw" name="@{args} = Buildroot.Qemu Args">
+<doc>Determine the command line that starts qemu with the current</doc>
+<arguments>
+<arg>${arch}</arg>
+<arg>kernel=${kernel}</arg>
+<arg>options=@{options}</arg>
+<arg>append=@{append}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:27.950" level="INFO">@{args} = [ qemu-system-x86_64 | -serial | telnet::1234,server | -display | none | -kernel | builtin | -append | console=ttyS1 root=/dev/sda | -enable-kvm | -kernel | bzImage | -hda | /home/denis/workspace/buil...</msg>
+<status status="PASS" endtime="20150630 17:47:27.950" starttime="20150630 17:47:27.949"></status>
+</kw>
+<kw type="kw" name="${handle} = Process.Start Process">
+<doc>Starts a new process on background.</doc>
+<arguments>
+<arg>@{args}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:27.950" level="INFO">Starting process:
+['qemu-system-x86_64', '-serial', 'telnet::1234,server', '-display', 'none', '-kernel', 'builtin', '-append', 'console=ttyS1 root=/dev/sda', '-enable-kvm', '-kernel', 'bzImage', '-hda', '/home/denis/workspace/buildroot_test/images_from_vicx-dell/deb/rootfs.ext2']</msg>
+<msg timestamp="20150630 17:47:27.955" level="INFO">${handle} = 1</msg>
+<status status="PASS" endtime="20150630 17:47:27.954" starttime="20150630 17:47:27.950"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Set Suite Variable">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${HANDLE}</arg>
+<arg>${handle}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:27.956" level="INFO">${HANDLE} = 1</msg>
+<status status="PASS" endtime="20150630 17:47:27.956" starttime="20150630 17:47:27.955"></status>
+</kw>
+<status status="PASS" endtime="20150630 17:47:27.956" starttime="20150630 17:47:27.939"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Wait Until Keyword Succeeds">
+<doc>Waits until the specified keyword succeeds or the given timeout expires.</doc>
+<arguments>
+<arg>10 sec</arg>
+<arg>2 sec</arg>
+<arg>Open Connection</arg>
+<arg>${address}</arg>
+<arg>port=${port}</arg>
+</arguments>
+<kw type="kw" name="Telnet.Open Connection">
+<doc>Opens a new Telnet connection to the given host and port.</doc>
+<arguments>
+<arg>${address}</arg>
+<arg>port=${port}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:27.958" level="INFO">Opening connection to localhost:1234 with prompt: # 
+#</msg>
+<msg timestamp="20150630 17:47:27.968" level="FAIL">error: [Errno 111] Connection refused</msg>
+<status status="FAIL" endtime="20150630 17:47:27.968" starttime="20150630 17:47:27.957"></status>
+</kw>
+<kw type="kw" name="Telnet.Open Connection">
+<doc>Opens a new Telnet connection to the given host and port.</doc>
+<arguments>
+<arg>${address}</arg>
+<arg>port=${port}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:29.973" level="INFO">Opening connection to localhost:1234 with prompt: # 
+#</msg>
+<status status="PASS" endtime="20150630 17:47:29.974" starttime="20150630 17:47:29.971"></status>
+</kw>
+<status status="PASS" endtime="20150630 17:47:29.974" starttime="20150630 17:47:27.957"></status>
+</kw>
+<kw type="kw" name="Buildroot.Login">
+<doc>This is a hack of the robotframework telnet library's login function</doc>
+<arguments>
+<arg>${username}</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.463" level="INFO">Welcome to Buildroot
+shadow-sheep login: root
+Password: 
+# 
+#</msg>
+<status status="PASS" endtime="20150630 17:47:32.463" starttime="20150630 17:47:29.975"></status>
+</kw>
+<status status="PASS" endtime="20150630 17:47:32.463" starttime="20150630 17:47:27.938"></status>
+</kw>
+<test id="s1-t1" name="Check Python Version">
+<kw type="kw" name="buildroot.Check Command Return Code">
+<doc>acts on distant machine</doc>
+<arguments>
+<arg>0</arg>
+<arg>python --version 2&gt;&amp;1 | grep -q '^Python 2'</arg>
+</arguments>
+<kw type="kw" name="${out}, ${return_code} = buildroot.Execute Command With Return Code">
+<doc>Expands the telnet library Execute Command by getting</doc>
+<arguments>
+<arg>${command}</arg>
+</arguments>
+<kw type="kw" name="${out} = Telnet.Execute Command">
+<doc>Executes the given `command` and reads, logs, and returns everything until the prompt.</doc>
+<arguments>
+<arg>${command}</arg>
+<arg>${loglevel}</arg>
+<arg>${strip_prompt}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.510" level="INFO">python --version 2&gt;&amp;1 | grep -q '^Python 2'</msg>
+<msg timestamp="20150630 17:47:32.510" level="INFO"># 
+#</msg>
+<msg timestamp="20150630 17:47:32.510" level="INFO">${out} = # 
+#</msg>
+<status status="PASS" endtime="20150630 17:47:32.510" starttime="20150630 17:47:32.469"></status>
+</kw>
+<kw type="kw" name="${return} = Telnet.Execute Command">
+<doc>Executes the given `command` and reads, logs, and returns everything until the prompt.</doc>
+<arguments>
+<arg>echo $?</arg>
+<arg>strip_prompt=${TRUE}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.553" level="INFO">echo $?</msg>
+<msg timestamp="20150630 17:47:32.553" level="INFO">0
+# 
+#</msg>
+<msg timestamp="20150630 17:47:32.554" level="INFO">${return} = 0
+</msg>
+<status status="PASS" endtime="20150630 17:47:32.554" starttime="20150630 17:47:32.511"></status>
+</kw>
+<msg timestamp="20150630 17:47:32.555" level="INFO">${out} = # 
+#</msg>
+<msg timestamp="20150630 17:47:32.555" level="INFO">${return_code} = 0</msg>
+<status status="PASS" endtime="20150630 17:47:32.555" starttime="20150630 17:47:32.467"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${expected_code}</arg>
+<arg>${return_code}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.557" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20150630 17:47:32.557" starttime="20150630 17:47:32.556"></status>
+</kw>
+<status status="PASS" endtime="20150630 17:47:32.557" starttime="20150630 17:47:32.465"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20150630 17:47:32.557" critical="yes" starttime="20150630 17:47:32.464"></status>
+</test>
+<test id="s1-t2" name="Check Python Math">
+<kw type="kw" name="buildroot.Check Command Return Code">
+<doc>acts on distant machine</doc>
+<arguments>
+<arg>0</arg>
+<arg>python -c 'import math; math.floor(12.3)'</arg>
+</arguments>
+<kw type="kw" name="${out}, ${return_code} = buildroot.Execute Command With Return Code">
+<doc>Expands the telnet library Execute Command by getting</doc>
+<arguments>
+<arg>${command}</arg>
+</arguments>
+<kw type="kw" name="${out} = Telnet.Execute Command">
+<doc>Executes the given `command` and reads, logs, and returns everything until the prompt.</doc>
+<arguments>
+<arg>${command}</arg>
+<arg>${loglevel}</arg>
+<arg>${strip_prompt}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.606" level="INFO">python -c 'import math; math.floor(12.3)'</msg>
+<msg timestamp="20150630 17:47:32.638" level="INFO"># 
+#</msg>
+<msg timestamp="20150630 17:47:32.639" level="INFO">${out} = # 
+#</msg>
+<status status="PASS" endtime="20150630 17:47:32.639" starttime="20150630 17:47:32.562"></status>
+</kw>
+<kw type="kw" name="${return} = Telnet.Execute Command">
+<doc>Executes the given `command` and reads, logs, and returns everything until the prompt.</doc>
+<arguments>
+<arg>echo $?</arg>
+<arg>strip_prompt=${TRUE}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.679" level="INFO">echo $?</msg>
+<msg timestamp="20150630 17:47:32.680" level="INFO">0
+# 
+#</msg>
+<msg timestamp="20150630 17:47:32.680" level="INFO">${return} = 0
+</msg>
+<status status="PASS" endtime="20150630 17:47:32.680" starttime="20150630 17:47:32.639"></status>
+</kw>
+<msg timestamp="20150630 17:47:32.681" level="INFO">${out} = # 
+#</msg>
+<msg timestamp="20150630 17:47:32.681" level="INFO">${return_code} = 0</msg>
+<status status="PASS" endtime="20150630 17:47:32.680" starttime="20150630 17:47:32.560"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${expected_code}</arg>
+<arg>${return_code}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.682" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20150630 17:47:32.682" starttime="20150630 17:47:32.681"></status>
+</kw>
+<status status="PASS" endtime="20150630 17:47:32.682" starttime="20150630 17:47:32.559"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20150630 17:47:32.682" critical="yes" starttime="20150630 17:47:32.558"></status>
+</test>
+<test id="s1-t3" name="Check Python Libc">
+<kw type="kw" name="buildroot.Check Command Return Code">
+<doc>acts on distant machine</doc>
+<arguments>
+<arg>0</arg>
+<arg>python -c 'import ctypes; libc = ctypes.cdll.LoadLibrary(\"libc.so.0\"); print libc.time(None)'</arg>
+</arguments>
+<kw type="kw" name="${out}, ${return_code} = buildroot.Execute Command With Return Code">
+<doc>Expands the telnet library Execute Command by getting</doc>
+<arguments>
+<arg>${command}</arg>
+</arguments>
+<kw type="kw" name="${out} = Telnet.Execute Command">
+<doc>Executes the given `command` and reads, logs, and returns everything until the prompt.</doc>
+<arguments>
+<arg>${command}</arg>
+<arg>${loglevel}</arg>
+<arg>${strip_prompt}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.729" level="INFO">python -c 'import ctypes; libc = ctypes.cdll.LoadLibrary("libc.so.0"); print l</msg>
+<msg timestamp="20150630 17:47:32.748" level="INFO">ibc.time(None)'
+1435679251
+# 
+#</msg>
+<msg timestamp="20150630 17:47:32.748" level="INFO">${out} = ibc.time(None)'
+1435679251
+# 
+#</msg>
+<status status="PASS" endtime="20150630 17:47:32.748" starttime="20150630 17:47:32.686"></status>
+</kw>
+<kw type="kw" name="${return} = Telnet.Execute Command">
+<doc>Executes the given `command` and reads, logs, and returns everything until the prompt.</doc>
+<arguments>
+<arg>echo $?</arg>
+<arg>strip_prompt=${TRUE}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.790" level="INFO">echo $?</msg>
+<msg timestamp="20150630 17:47:32.790" level="INFO">0
+# 
+#</msg>
+<msg timestamp="20150630 17:47:32.791" level="INFO">${return} = 0
+</msg>
+<status status="PASS" endtime="20150630 17:47:32.791" starttime="20150630 17:47:32.749"></status>
+</kw>
+<msg timestamp="20150630 17:47:32.793" level="INFO">${out} = ibc.time(None)'
+1435679251
+# 
+#</msg>
+<msg timestamp="20150630 17:47:32.793" level="INFO">${return_code} = 0</msg>
+<status status="PASS" endtime="20150630 17:47:32.793" starttime="20150630 17:47:32.685"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${expected_code}</arg>
+<arg>${return_code}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.794" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20150630 17:47:32.794" starttime="20150630 17:47:32.793"></status>
+</kw>
+<status status="PASS" endtime="20150630 17:47:32.795" starttime="20150630 17:47:32.684"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20150630 17:47:32.795" critical="yes" starttime="20150630 17:47:32.683"></status>
+</test>
+<test id="s1-t4" name="Check Python Zlib">
+<kw type="kw" name="buildroot.Check Command Return Code">
+<doc>acts on distant machine</doc>
+<arguments>
+<arg>1</arg>
+<arg>python -c 'import zlib'</arg>
+</arguments>
+<kw type="kw" name="${out}, ${return_code} = buildroot.Execute Command With Return Code">
+<doc>Expands the telnet library Execute Command by getting</doc>
+<arguments>
+<arg>${command}</arg>
+</arguments>
+<kw type="kw" name="${out} = Telnet.Execute Command">
+<doc>Executes the given `command` and reads, logs, and returns everything until the prompt.</doc>
+<arguments>
+<arg>${command}</arg>
+<arg>${loglevel}</arg>
+<arg>${strip_prompt}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.843" level="INFO">python -c 'import zlib'</msg>
+<msg timestamp="20150630 17:47:32.843" level="INFO"># 
+#</msg>
+<msg timestamp="20150630 17:47:32.843" level="INFO">${out} = # 
+#</msg>
+<status status="PASS" endtime="20150630 17:47:32.843" starttime="20150630 17:47:32.800"></status>
+</kw>
+<kw type="kw" name="${return} = Telnet.Execute Command">
+<doc>Executes the given `command` and reads, logs, and returns everything until the prompt.</doc>
+<arguments>
+<arg>echo $?</arg>
+<arg>strip_prompt=${TRUE}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.886" level="INFO">echo $?</msg>
+<msg timestamp="20150630 17:47:32.887" level="INFO">0
+# 
+#</msg>
+<msg timestamp="20150630 17:47:32.888" level="INFO">${return} = 0
+</msg>
+<status status="PASS" endtime="20150630 17:47:32.887" starttime="20150630 17:47:32.844"></status>
+</kw>
+<msg timestamp="20150630 17:47:32.889" level="INFO">${out} = # 
+#</msg>
+<msg timestamp="20150630 17:47:32.890" level="INFO">${return_code} = 0</msg>
+<status status="PASS" endtime="20150630 17:47:32.889" starttime="20150630 17:47:32.799"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${expected_code}</arg>
+<arg>${return_code}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.891" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<msg timestamp="20150630 17:47:32.893" level="FAIL">1 != 0</msg>
+<status status="FAIL" endtime="20150630 17:47:32.893" starttime="20150630 17:47:32.890"></status>
+</kw>
+<status status="FAIL" endtime="20150630 17:47:32.893" starttime="20150630 17:47:32.797"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="FAIL" endtime="20150630 17:47:32.894" critical="yes" starttime="20150630 17:47:32.796">1 != 0</status>
+</test>
+<kw type="teardown" name="buildroot.Shutdown">
+<doc>Close the telnet connection to qemu and stop qemu</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Telnet.Close Connection">
+<doc>Closes the current Telnet connection.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20150630 17:47:32.897" starttime="20150630 17:47:32.896"></status>
+</kw>
+<kw type="kw" name="Process.Terminate Process">
+<doc>Stops the process gracefully or forcefully.</doc>
+<arguments>
+<arg>${HANDLE}</arg>
+</arguments>
+<msg timestamp="20150630 17:47:32.898" level="INFO">Gracefully terminating process.</msg>
+<msg timestamp="20150630 17:47:32.999" level="INFO">Process completed.</msg>
+<status status="PASS" endtime="20150630 17:47:33.000" starttime="20150630 17:47:32.897"></status>
+</kw>
+<status status="PASS" endtime="20150630 17:47:33.001" starttime="20150630 17:47:32.895"></status>
+</kw>
+<doc>Data Driven test to check python on buildroot
+
+These test are mainly for checking networking connections
+and basic fuctionalities. Some are dupplicate of other SSH
+tests.
+
+Serial tests are realized through a telnet connection using
+ser2net on the testing machine. ser2net creates a passthrough
+between a serial connection and a tcp connection.
+Configuration.
+
+The builtin Telnet Library of robotframework is used for
+testing the serial connection. However some functionalities
+of the Telnet Library cannot always be used:
+- You cannot use the Login keyword without a password
+and have to login manually (with Read Until and write)</doc>
+<metadata>
+</metadata>
+<status status="FAIL" endtime="20150630 17:47:33.001" starttime="20150630 17:47:27.852"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="3">Critical Tests</stat>
+<stat fail="1" pass="3">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="1" pass="3" id="s1" name="Python Test">Python Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

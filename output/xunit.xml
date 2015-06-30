@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite failures="1" tests="4" errors="0" name="Python Test" skip="0">
+<testcase classname="Python Test" name="Check Python Version" time="0">
+</testcase>
+<testcase classname="Python Test" name="Check Python Math" time="0">
+</testcase>
+<testcase classname="Python Test" name="Check Python Libc" time="0">
+</testcase>
+<testcase classname="Python Test" name="Check Python Zlib" time="0">
+<failure message="1 != 0" type="AssertionError"></failure>
+</testcase>
+</testsuite>
